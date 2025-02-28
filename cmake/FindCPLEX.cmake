@@ -63,22 +63,37 @@ else ()
         set(CPLEX_LIB_PATH_SUFFIXES_DEBUG lib/${CPLEX_ARCH}_windows_vs2008/stat_mdd)
     endif ()
 endif ()
-if (NOT CPLEX_STUDIO_DIR)
+
+# Detect CPLEX Studio directory
+if (NOT CPLEX_STUDIO_DIR OR CPLEX_STUDIO_DIR STREQUAL "CPLEX_STUDIO_DIR-NOTFOUND")
+    message(STATUS "Looking for CPLEX Studio in: ${CPLEX_ILOG_DIRS}")
+
+    unset(CPLEX_STUDIO_DIR_ CACHE)  # Ensure no previous cache interference
+    unset(CPLEX_STUDIO_DIR)  # Ensure fresh search
+
     foreach (dir ${CPLEX_ILOG_DIRS})
+        file(GLOB CPLEX_CONTENTS "${dir}/*")
+        message(STATUS "Contents of ${dir}: ${CPLEX_CONTENTS}")
+
         file(GLOB CPLEX_STUDIO_DIRS "${dir}/CPLEX_Studio*")
         list(SORT CPLEX_STUDIO_DIRS)
         list(REVERSE CPLEX_STUDIO_DIRS)
+
         if (CPLEX_STUDIO_DIRS)
             list(GET CPLEX_STUDIO_DIRS 0 CPLEX_STUDIO_DIR_)
             message(STATUS "Found CPLEX Studio: ${CPLEX_STUDIO_DIR_}")
             break ()
         endif ()
     endforeach ()
-    if (NOT CPLEX_STUDIO_DIR_)
-        set(CPLEX_STUDIO_DIR_ CPLEX_STUDIO_DIR-NOTFOUND)
+
+    if (DEFINED CPLEX_STUDIO_DIR_)
+        set(CPLEX_STUDIO_DIR ${CPLEX_STUDIO_DIR_} CACHE PATH "Path to the CPLEX Studio directory" FORCE)
+    else()
+        set(CPLEX_STUDIO_DIR "CPLEX_STUDIO_DIR-NOTFOUND" CACHE PATH "Path to the CPLEX Studio directory" FORCE)
+        message(WARNING "CPLEX Studio directory not found")
     endif ()
-    set(CPLEX_STUDIO_DIR ${CPLEX_STUDIO_DIR_} CACHE PATH
-            "Path to the CPLEX Studio directory")
+
+    message(STATUS "Final detected CPLEX Studio directory: ${CPLEX_STUDIO_DIR}")
 endif ()
 
 find_package(Threads)

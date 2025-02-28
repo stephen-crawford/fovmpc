@@ -296,7 +296,7 @@ int main(int argc, char* argv[]) {
     // init cbf
     std::shared_ptr<FovCBF> fov_cbf = std::make_unique<FovCBF>(fov_beta, fov_Ds, fov_Rs, v_min, v_max);
     // init bezier mpc-cbf
-    uint64_t bezier_continuity_upto_degree = 3;
+    uint64_t bezier_continuity_upto_degree = 10;
     int num_neighbors = experiment_config_json["tasks"]["so"].size() - 1;
     std::cout << "neighbor size: " << num_neighbors << "\n";
     BezierMPCCBFParams bezier_mpc_cbf_params = {piecewise_bezier_params, mpc_params, fov_cbf_params};

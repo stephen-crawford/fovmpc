@@ -130,7 +130,7 @@ def snapshots2D_XYYaw(traj, goals, goal_radius, estimate_mean, estimate_cov, p_n
     if Trailing:
         trail = [Line2D([x[0][0]], [y[0][0]]) for i in range(n_agent)]
         for i in range(n_agent):
-                trail[i], = ax.plot(x[i, :frame_idx+1], y[i, :frame_idx+1], c=colors[i], marker=None, linewidth=3, alpha=0.6)
+            trail[i], = ax.plot(x[i, :frame_idx+1], y[i, :frame_idx+1], c=colors[i], marker=None, linewidth=3, alpha=0.6)
 
     pred_idx = int(frame_idx//int(dt/Ts))
     if Estimation:
@@ -363,7 +363,7 @@ def animation2D_XYYaw(traj, estimate_mean, estimate_cov, p_near, dt, Ts, bbox, p
                     preds[i][impc_it].set_data(iter_pred_curve[i, pred_index, :, 0], iter_pred_curve[i, pred_index, :, 1])
                     if enable_preview:
                         for index_i, iter_index in enumerate([0]): # TODO fix this, for now is a temporary fix and the next line is the original
-                        # for index_i, iter_index in enumerate([0, impc_iters-1]):
+                            # for index_i, iter_index in enumerate([0, impc_iters-1]):
                             if impc_it == iter_index:
                                 # Update predicted FoV
                                 for index, k in enumerate(fov_preview_plot_step):
