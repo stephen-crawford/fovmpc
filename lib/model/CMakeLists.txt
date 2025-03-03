@@ -11,7 +11,9 @@ if(NOT is_math_ADDED)
 endif()
 
 # add libraries
-add_library(model_DoubleIntegrator SHARED src/DoubleIntegrator.cpp)
+add_library(model_DoubleIntegrator SHARED src/DoubleIntegrator.cpp
+        src/FullStateDynamics.cpp
+        include/model/FullStateDynamics.h)
 target_include_directories(model_DoubleIntegrator PUBLIC include)
 target_link_libraries(model_DoubleIntegrator PUBLIC math_Types)
 
