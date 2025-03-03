@@ -1,5 +1,5 @@
 cd ../../tools/
-date="02262025"
+date="02272025"
 instances="circle"
 #instances="formation"
 min_r=2
