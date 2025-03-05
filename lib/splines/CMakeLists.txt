@@ -27,6 +27,14 @@ target_link_libraries(splines_detail_BezierOperations PUBLIC
         math_Types
         math_Combinatorics)
 
+
+# detail/BezierOperations
+add_library(splines_detail_CatmullRomOperations SHARED src/detail/CatmullRomOperations.cpp)
+target_include_directories(splines_detail_CatmullRomOperations PUBLIC include ${EIGEN3_INCLUDE_DIR})
+target_link_libraries(splines_detail_CatmullRomOperations PUBLIC
+math_Types
+math_Combinatorics)
+
 #get_property(is_optimizer_ADDED GLOBAL PROPERTY optimizer_ADDED)
 #if(NOT is_optimizer_ADDED)
 #    add_subdirectory(../optimizer ${CMAKE_CURRENT_BINARY_DIR}/optimizer)
@@ -34,7 +42,9 @@ target_link_libraries(splines_detail_BezierOperations PUBLIC
 
 
 # curves/Bezier
-add_library(splines_curves_Bezier SHARED src/curves/Bezier.cpp)
+add_library(splines_curves_Bezier SHARED src/curves/Bezier.cpp
+        src/curves/CatmullRomSegment.cpp
+        include/splines/curves/CatmullRomSegment.h)
 target_include_directories(splines_curves_Bezier PUBLIC include)
 target_link_libraries(splines_curves_Bezier PUBLIC
         math_Types
@@ -89,5 +99,16 @@ target_link_libraries(splines_tests_BezierOptimization_test PUBLIC
         splines_curves_SingleParameterPiecewiseCurve
         splines_curves_Helpers
         splines_optimization_BezierQPOperations
-        splines_optimization_SingleParameterPiecewiseCurveQPGenerator
-)
+        splines_optimization_SingleParameterPiecewiseCurveQPGenerator)
+
+# Test detail/test_CatmullRomOptimization
+add_executable(splines_tests_CatmullRomOptimization_test tests/detail/CatmullRomOperations_test.cpp)
+target_include_directories(splines_tests_CatmullRomOptimization_test PUBLIC include)
+target_link_libraries(splines_tests_CatmullRomOptimization_test PUBLIC
+        math_Types
+        qpcpp_solvers_CPLEX
+        splines_curves_Bezier
+        splines_curves_SingleParameterPiecewiseCurve
+        splines_curves_Helpers
+        splines_optimization_BezierQPOperations
+        splines_optimization_SingleParameterPiecewiseCurveQPGenerator)

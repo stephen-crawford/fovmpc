@@ -22,7 +22,8 @@ add_library(math_collision_shapes_CollisionShape SHARED src/collision_shapes/Col
 target_include_directories(math_collision_shapes_CollisionShape PUBLIC include)
 target_link_libraries(math_collision_shapes_CollisionShape PUBLIC math_Types)
 
-add_library(math_collision_shapes_AlignedBoxCollisionShape SHARED src/collision_shapes/AlignedBoxCollisionShape.cpp)
+add_library(math_collision_shapes_AlignedBoxCollisionShape SHARED src/collision_shapes/AlignedBoxCollisionShape.cpp
+        ../splines/include/splines/optimization/CatmullRomQPOperations.h)
 target_include_directories(math_collision_shapes_AlignedBoxCollisionShape PUBLIC include)
 target_link_libraries(math_collision_shapes_AlignedBoxCollisionShape PUBLIC
         math_collision_shapes_CollisionShape)
